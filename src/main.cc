@@ -3,7 +3,7 @@
 
 int main (int argc, char *argv[]) {
     int brightness;
-    if (argc == 0)
+    if (argc == 1)
         brightness = 100;
     else
         brightness = atoi(argv[1]);
