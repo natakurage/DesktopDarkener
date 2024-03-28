@@ -2,11 +2,18 @@
 simple command line tool to make windows darker
 
 # Usage
-Compile this with cl.exe and just run.
+Compile main.cc and just run.
 You can give the brightness as a single command line argument 0-100 value. For example, when you want to reduce the brightness by half, run
 ```
-./main.exe 50
+darkner.exe 50
 ```
+The brightness will saved to same folder as the .exe file.
+
+You can also "toggle" brightness between 0 and 100.
+```
+darkner.exe toggle
+```
+If saved brightness is under 50, the brightness will be 100, else it will be 0. If the file does not exist, the brightness will be 100.
 
 # Why Desktop Darkener
 There are many software that can reduce the monitor brightness pushing device limits, but there are several problems with them.
