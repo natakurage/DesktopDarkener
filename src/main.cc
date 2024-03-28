@@ -1,7 +1,11 @@
 #include "brightness.h"
 #include <iostream>
 
-int main (int argc, char *argv[]) {
+int WINAPI WinMain(HINSTANCE hInstance, 
+    HINSTANCE hPrevInstance, 
+    LPSTR lpCmdLine, 
+    int nCmdShow
+    ) {
     int brightness;
     if (argc == 1)
         brightness = 100;
