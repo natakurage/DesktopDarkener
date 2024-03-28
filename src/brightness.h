@@ -3,6 +3,7 @@
 #include <windows.h>
 #include <cmath>
 #include <iostream>
+#include <fstream>
 
 const int MAX_VALUE = 65535;
 const int MIN_VALUE = 32768;
@@ -36,7 +37,7 @@ BOOL CALLBACK MyMonitorEnumProc(HMONITOR hMonitor, HDC hdcMonitor, LPRECT lprcMo
     return result;
 }
 
-BOOL set_brightness(int brightness)
+BOOL set_brightness(int brightness, std::wstring path)
 {
     for (int tries = 0; tries < MAX_TRIES; tries++)
     {
@@ -46,6 +47,11 @@ BOOL set_brightness(int brightness)
         bool result2 = ReleaseDC(0, AllDC);
         std::cout << (result2 ? "released" : "not released") << std::endl;
         if (result) {
+            if (!path.empty()) {
+                std::ofstream outputfile(path);
+                outputfile << brightness;
+            } else
+                std::clog << "didn't save brightness because path is empty" << std::endl;
             return true;
         } else {
             std::cout << tries + 1 << "th trial failed, retrying..." << std::endl;;
@@ -53,4 +59,21 @@ BOOL set_brightness(int brightness)
     }
     std::cout << "Failed" << MAX_TRIES << "times, finished" << std::endl;;
     return false;
+}
+
+int get_current_brightness(std::wstring path)
+{
+    if (path.empty()) {
+        std::cerr << "path is empty" << std::endl;
+        return 0;
+    }
+    std::ifstream inputfile(path);
+    if (!inputfile) {
+        std::cerr << "file not found" << std::endl;
+        return 0;
+    }
+    int brightness;
+    inputfile >> brightness;
+    std::cout << brightness << std::endl;
+    return brightness;
 }
